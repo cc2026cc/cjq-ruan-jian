@@ -1023,7 +1023,7 @@
                 <div class="download-card-inner">
                     <h3>PS批量导出插件.jsx</h3>
                     <p class="version-info">v10 · 专为效率而生</p>
-                    <a href="https://api.countapi.xyz/hit/psbatch-v10/download?redirect=PS批量导出v10.jsx" class="btn btn-primary" download>
+                    <a href="PS批量导出v10.jsx" class="btn btn-primary" download onclick="incrementCount()">
                         <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                         下载脚本文件
                     </a>
@@ -1115,15 +1115,25 @@
                 tabAlipay.classList.add('active');
             }
         }
-            // 获取下载次数并更新右下角数字
-        fetch('https://api.countapi.xyz/get/psbatch-v10/download')
+// 1. 网页加载时，获取当前的下载次数并显示在右下角
+        fetch('https://api.counterapi.dev/v1/psbatch_plugin/downloads')
             .then(r => r.json())
             .then(d => {
-                document.getElementById('dlcount').textContent = d.value;
+                document.getElementById('dlcount').textContent = d.count;
             })
             .catch(() => {
                 document.getElementById('dlcount').textContent = '-';
             });
+
+        // 2. 当用户点击下载按钮时，给服务器发送通知，次数 +1
+        function incrementCount() {
+            fetch('https://api.counterapi.dev/v1/psbatch_plugin/downloads/up')
+                .then(r => r.json())
+                .then(d => {
+                    document.getElementById('dlcount').textContent = d.count;
+                })
+                .catch(e => console.error('计数更新失败', e));
+        }
     </script>
 </body>
 </html>
