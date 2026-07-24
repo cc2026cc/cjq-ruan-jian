@@ -1023,7 +1023,7 @@
                 <div class="download-card-inner">
                     <h3>PS批量导出插件.jsx</h3>
                     <p class="version-info">v10 · 专为效率而生</p>
-                    <a href="PS批量导出v10.jsx" class="btn btn-primary" download>
+                    <a href="https://api.countapi.xyz/hit/psbatch-v10/download?redirect=PS批量导出v10.jsx" class="btn btn-primary" download>
                         <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                         下载脚本文件
                     </a>
@@ -1064,6 +1064,7 @@
         <p>由 <span class="footer-heart">❤</span> 精心构建 · PS批量导出插件 为效率而生</p>
         <p style="margin-top:4px;">托管于 <a href="https://github.com" target="_blank" rel="noopener noreferrer">GitHub</a> · 欢迎 Star 与下载</p>
     </footer>
+    <span id="dlcount" style="position:fixed;bottom:8px;right:12px;font-size:0.65rem;color:#4a4a5a;opacity:0.4;z-index:999;pointer-events:none;">0</span>
 
     <button class="back-to-top" id="backToTop" aria-label="回到顶部" title="回到顶部">↑</button>
 
@@ -1114,6 +1115,15 @@
                 tabAlipay.classList.add('active');
             }
         }
+            // 获取下载次数并更新右下角数字
+        fetch('https://api.countapi.xyz/get/psbatch-v10/download')
+            .then(r => r.json())
+            .then(d => {
+                document.getElementById('dlcount').textContent = d.value;
+            })
+            .catch(() => {
+                document.getElementById('dlcount').textContent = '-';
+            });
     </script>
 </body>
 </html>
